@@ -27,9 +27,16 @@ contract PhoneSmart{
         require(msg.value == database[_groupId].basePrice, "Please pay the base price");
         database[_groupId].members.push(payable(msg.sender));
     }
-    //function for creating a group
+    //function for creating the group and adding the user calling it to the members
     function createGroup(string memory _groupName, string memory _groupDescription, string memory _groupLink, string memory _groupQR, uint256 _basePrice) public{
-        database[indexDatabase] = Group(indexDatabase, _groupName, _groupDescription, new address payable[](0), true, _groupLink, _groupQR, _basePrice);
+        database[indexDatabase].groupId = indexDatabase;
+        database[indexDatabase].groupName = _groupName;
+        database[indexDatabase].groupDescription = _groupDescription;
+        database[indexDatabase].isActive = true;
+        database[indexDatabase].groupLink = _groupLink;
+        database[indexDatabase].groupQR = _groupQR;
+        database[indexDatabase].basePrice = _basePrice;
+        database[indexDatabase].members.push(payable(msg.sender));
         indexDatabase++;
     }
     //function to join the group with the getParticipants function
